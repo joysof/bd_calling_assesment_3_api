@@ -38,6 +38,23 @@ const createFolder = async (userId , name , parentId = null)=>{
     return folder
 }
 
+const getFolderContents = async (userId , folderId = null) =>{
+    if (folderId) {
+        const folder = await Item.findOne({_id : folderId , userId : userId , type : "folder"})
+
+        if (!folder) {
+            throw new ApiError(httpStatus.NOT_FOUND , "Folder not found or not accessible")
+        }
+    }
+
+    const items = await Item.find({
+        userId : userId,
+        parentId : folderId || null,
+    }).sort({type : 1 , name : 1})
+    return items
+}
+
 module.exports = {
-    createFolder
+    createFolder,
+    getFolderContents
 }

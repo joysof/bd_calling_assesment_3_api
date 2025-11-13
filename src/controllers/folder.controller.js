@@ -20,7 +20,21 @@ const createFolder = catchAsync(async (req , res) =>{
     )
 })
 
+const getFolderContents = catchAsync(async (req,res) =>{
+const {folderId} = req.params;
+const userId = req.user._id;
+const contens = await folderService.getFolderContents(userId , folderId)
 
+res.status(httpStatus.OK).json(
+    response({
+        message : "All folder content",
+        status : "Ok",
+        statusCode : httpStatus.OK,
+        data : contens
+    })
+)
+})
 module.exports ={
-    createFolder
+    createFolder,
+    getFolderContents
 }
