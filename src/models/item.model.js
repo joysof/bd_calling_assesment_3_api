@@ -34,6 +34,18 @@ const itemSchema = mongoose.Schema(
         },
         content : {
             type : String
+        },
+        isFavorite :{
+            type : Boolean,
+            default : false
+        },
+        shareWith : [{
+            type : mongoose.Schema.Types.ObjectId ,
+            ref : 'User'
+        }],
+        isDeleted : {
+            type : Boolean,
+            default : false
         }
     },{timestamps : true}
 )
