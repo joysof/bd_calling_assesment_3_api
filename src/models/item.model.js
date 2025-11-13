@@ -45,3 +45,5 @@ itemSchema.plugin(toJSON);
 itemSchema.plugin(paginate);
 
 const Item = mongoose.model("Item" , itemSchema)
+
+module.exports = Item
