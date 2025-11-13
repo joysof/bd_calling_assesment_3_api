@@ -143,11 +143,22 @@ const copyItem = async (userId, itemId, parentId = null) => {
   }
   return copy
 }
+
+const setAsFavorite = async (userId , itemId) =>{
+    const item = await Item.findOne({_id : itemId , userId : userId})
+    if (!item) {
+        throw new ApiError(httpStatus.NOT_FOUND,"item not found")
+    }
+    item.isFavorite = !item.isFavorite;
+    await item.save()
+    return item
+}
 module.exports = {
   createFolder,
   getFolderContents,
   getFolderStats,
   renameItem,
   deleteItem,
-  copyItem
+  copyItem,
+  setAsFavorite
 }

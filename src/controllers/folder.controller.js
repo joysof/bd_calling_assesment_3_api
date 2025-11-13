@@ -79,18 +79,32 @@ const deleteItem = catchAsync(async (req, res) => {
   )
 })
 
-const copyItem = catchAsync(async(req,res) =>{
-    const {itemId} = req.params;
-    const {parentId} = req.body;
-    const userId = req.user._id
-    const copy = await folderService.copyItem(userId , itemId , parentId)
+const copyItem = catchAsync(async (req, res) => {
+  const { itemId } = req.params
+  const { parentId } = req.body
+  const userId = req.user._id
+  const copy = await folderService.copyItem(userId, itemId, parentId)
 
-      res.status(httpStatus.OK).json(
+  res.status(httpStatus.OK).json(
     response({
       message: 'copy Item successfully',
       status: 'Ok',
       statusCode: httpStatus.OK,
       data: copy,
+    })
+  )
+})
+
+const setAsFavorite = catchAsync(async (req, res) => {
+  const { itemId } = req.params
+  const userId = req.user._id
+  const favorite = await folderService.setAsFavorite(userId, itemId)
+  res.status(httpStatus.OK).json(
+    response({
+      message: 'set favorite item successfully',
+      status: 'Ok',
+      statusCode: httpStatus.OK,
+      data: favorite,
     })
   )
 })
@@ -100,5 +114,6 @@ module.exports = {
   getFolderStats,
   renameItem,
   deleteItem,
-  copyItem
+  copyItem,
+  setAsFavorite
 }
