@@ -53,9 +53,8 @@ const getFolderContents = async (userId , folderId = null) =>{
     const items = await Item.find({
         userId : userId,
         parentId : folderId || null,
+        isDeleted: false,
     }).sort({type : 1 , name : 1})
-    console.log("folderId " , folderId)
-    console.log("userId" , userId)
     return items
 }
 
