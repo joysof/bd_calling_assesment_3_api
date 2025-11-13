@@ -61,8 +61,19 @@ const getFolderStats = async (userId , folderId = null) =>{
     return {count : items.length , totalSize}
 }
 
+const renameItem = async(userId , itemId , newName) =>{
+    const item = await Item.findOne({_id : itemId , userId : userId , isDeleted : false})
+
+    if (!item) {
+        throw new ApiError(httpStatus.NOT_FOUND ,"item not found")
+    }
+    item.name = newName
+    await item.save()
+    return item;
+}
 module.exports = {
     createFolder,
     getFolderContents,
-    getFolderStats
+    getFolderStats,
+    renameItem
 }

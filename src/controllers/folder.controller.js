@@ -49,8 +49,24 @@ const getFolderStats = catchAsync (async (req,res) =>{
     })
 )
 })
+
+const renameItem = catchAsync(async(req,res) =>{
+    const {itemId} = req.params;
+    const {newName} = req.body;
+    const userId = req.user._id;
+    const item = await folderService.renameItem(userId , itemId , newName)
+    res.status(httpStatus.OK).json(
+    response({
+        message : "Rename successfully",
+        status : "Ok",
+        statusCode : httpStatus.OK,
+        data : item
+    })
+)
+}) 
 module.exports ={
     createFolder,
     getFolderContents,
-    getFolderStats
+    getFolderStats,
+    renameItem
 }
