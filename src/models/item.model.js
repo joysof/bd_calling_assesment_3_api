@@ -21,12 +21,27 @@ const itemSchema = mongoose.Schema(
             type : mongoose.Schema.Types.ObjectId,
             ref : "item",
             default : null
+        },
+        sizeBytes :{
+            type : Number,
+            default : 0
+        },
+        mimeType : {
+            type : String
+        },
+        storagePath : {
+            type : String
+        },
+        content : {
+            type : String
         }
-    }
+    },{timestamps : true}
 )
 
 
 
 
-userSchema.plugin(toJSON);
-userSchema.plugin(paginate);
+itemSchema.plugin(toJSON);
+itemSchema.plugin(paginate);
+
+const Item = mongoose.model("Item" , itemSchema)
