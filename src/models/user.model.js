@@ -6,17 +6,7 @@ const { roles } = require("../config/roles");
 
 const userSchema = mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    lastName: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    fullName: {
+    name: {
       type: String,
       required: false,
       trim: true,
@@ -53,40 +43,6 @@ const userSchema = mongoose.Schema(
       },
       private: true,
     },
-    role: {
-      type: String,
-      enum: roles,
-    },
-    callingCode: {
-      type: String,
-      required: false,
-      default: null
-    },
-    phoneNumber: {
-      type: Number,
-      required: false,
-      default: null
-    },
-    nidNumber: {
-      type: Number,
-      required: false,
-      default: null
-    },
-    isNIDVerified: {
-      type: Boolean,
-      default: false,
-      default: null
-    },
-    dataOfBirth: {
-      type: Date,
-      required: false,
-      default: null
-    },
-    address: {
-      type: String,
-      required: false,
-      default: null
-    },
     oneTimeCode: {
       type: String,
       required: false,
@@ -100,48 +56,18 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isProfileCompleted: {
-      type: Boolean,
-      default: false,
-    },
     fcmToken: { // onlly use for firebase push notification / mobile focus*
       type: String,
       required: false,
       default: null,
     },
+      role: {
+      type: String,
+      enum: roles,
+    },
     isDeleted: {
       type: Boolean,
       default: false
-    },
-
-    securitySettings: {
-      recoveryEmail: {
-        type: String,
-        lowercase: true,
-        trim: true,
-        match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
-        default: null,
-      },
-      recoveryPhone: {
-        type: String,
-        trim: true,
-        match: [/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"],
-        default: null,
-      },
-      securityQuestion: {
-        type: String,
-        trim: true,
-        default: null,
-      },
-      securityAnswer: {
-        type: String,
-        required: function () {
-          return !!this.securityQuestion;
-        },
-        set: (answer) => (answer ? require("crypto").createHash("sha256").update(answer).digest("hex") : null),
-        select: false,
-        default: null,
-      },
     },
   },
   {
