@@ -3,7 +3,18 @@ const ApiError = require("../utils/ApiError");
 const logger = require("../config/logger");
 const {Item} = require("../models")
 
+const checkDuplicateItem = async ({ userId, name, type, parentId = null }) => {
+  const duplicate = await Item.findOne({
+    userId,
+    type,
+    parentId: parentId || null,
+    name,
+  });
 
+  if (duplicate) {
+    throw new ApiError(httpStatus.BAD_REQUEST, `${type} with this name already exists`);
+  }
+};
 const createFolder = async (userId , name , parentId = null)=>{
     if (!name) {
         throw new ApiError(httpStatus.BAD_REQUEST , "Folder name is required")
@@ -20,15 +31,7 @@ const createFolder = async (userId , name , parentId = null)=>{
         }
     }
     
-    const duplicate = await Item.findOne({
-        userId : userId,
-        type : "folder",
-        parentId : parentId || null,
-        name
-    })
-    if (duplicate) {
-        throw new ApiError(httpStatus.BAD_REQUEST , "Folder with this name already exists")
-    }
+   await checkDuplicateItem({userId , name , type :"folder" , parentId})
     const folder = await Item.create({
         userId : userId,
         type : "folder",
@@ -51,6 +54,8 @@ const getFolderContents = async (userId , folderId = null) =>{
         userId : userId,
         parentId : folderId || null,
     }).sort({type : 1 , name : 1})
+    console.log("folderId " , folderId)
+    console.log("userId" , userId)
     return items
 }
 
@@ -68,6 +73,7 @@ const renameItem = async(userId , itemId , newName) =>{
         throw new ApiError(httpStatus.NOT_FOUND ,"item not found")
     }
     item.name = newName
+   await checkDuplicateItem({userId , name:newName , type:item.type , parentId: item.parentId || null} )
     await item.save()
     return item;
 }
