@@ -54,7 +54,15 @@ const getFolderContents = async (userId , folderId = null) =>{
     return items
 }
 
+const getFolderStats = async (userId , folderId = null) =>{
+    const items = await Item.find({userId : userId , parentId : folderId || null})
+    const totalSize = items.reduce((sum , item) => sum + (item.sizeBytes || 0) , 0)
+    
+    return {count : items.length , totalSize}
+}
+
 module.exports = {
     createFolder,
-    getFolderContents
+    getFolderContents,
+    getFolderStats
 }

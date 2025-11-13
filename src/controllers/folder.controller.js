@@ -34,7 +34,23 @@ res.status(httpStatus.OK).json(
     })
 )
 })
+
+const getFolderStats = catchAsync (async (req,res) =>{
+    const {folderId} = req.params;
+    const userId = req.user._id
+    const stats = await folderService.getFolderStats(userId , folderId)
+
+    res.status(httpStatus.OK).json(
+    response({
+        message : "All folder status",
+        status : "Ok",
+        statusCode : httpStatus.OK,
+        data : stats
+    })
+)
+})
 module.exports ={
     createFolder,
-    getFolderContents
+    getFolderContents,
+    getFolderStats
 }
