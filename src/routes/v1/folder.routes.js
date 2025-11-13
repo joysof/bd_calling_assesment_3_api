@@ -7,12 +7,14 @@ const { folderController } = require("../../controllers")
 const folderRoutes= express.Router()
 
 folderRoutes.post(('/') ,auth() ,folderController.createFolder)
+folderRoutes.get(('/allFavorite') ,auth() ,folderController.getAllFavoriteItems)
 folderRoutes.get(('/:folderId') ,auth() ,folderController.getFolderContents)
 folderRoutes.get(('/:folderId/stats') ,auth() ,folderController.getFolderStats)
 folderRoutes.patch(('/:itemId/rename') ,auth() ,folderController.renameItem)
 folderRoutes.delete(('/:itemId') ,auth() ,folderController.deleteItem)
 folderRoutes.post(('/:itemId/copy') ,auth() ,folderController.copyItem)
 folderRoutes.put(('/:itemId/favorite') ,auth() ,folderController.setAsFavorite)
+
 
 
 module.exports = folderRoutes

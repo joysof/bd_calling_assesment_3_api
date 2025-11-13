@@ -153,6 +153,19 @@ const setAsFavorite = async (userId , itemId) =>{
     await item.save()
     return item
 }
+
+const getAllFavoriteItems = async (userId) =>{
+    if (!userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED , "you are not login ")
+    }
+    const items = await Item.find({
+        userId : userId,
+        isFavorite : true,
+        isDeleted : false,
+    }).sort({ updatedAt: -1 })
+    return items
+}
+
 module.exports = {
   createFolder,
   getFolderContents,
@@ -160,5 +173,6 @@ module.exports = {
   renameItem,
   deleteItem,
   copyItem,
-  setAsFavorite
+  setAsFavorite,
+  getAllFavoriteItems
 }

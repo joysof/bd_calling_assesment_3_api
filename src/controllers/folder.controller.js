@@ -108,6 +108,19 @@ const setAsFavorite = catchAsync(async (req, res) => {
     })
   )
 })
+
+const getAllFavoriteItems = catchAsync(async (req,res) =>{
+    const userId = req.user._id;
+    const items = await folderService.getAllFavoriteItems(userId)
+      res.status(httpStatus.OK).json(
+    response({
+      message: 'all favorite items',
+      status: 'Ok',
+      statusCode: httpStatus.OK,
+      data: items,
+    })
+  )
+})
 module.exports = {
   createFolder,
   getFolderContents,
@@ -115,5 +128,6 @@ module.exports = {
   renameItem,
   deleteItem,
   copyItem,
-  setAsFavorite
+  setAsFavorite,
+  getAllFavoriteItems
 }
