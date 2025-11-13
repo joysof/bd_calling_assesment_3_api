@@ -64,9 +64,25 @@ const renameItem = catchAsync(async(req,res) =>{
     })
 )
 }) 
+
+const deleteItem = catchAsync (async (req,res) =>{
+    const {itemId} = req.params;
+    const userId = req.user._id;
+    const deleteItem =  await folderService.deleteItem(userId , itemId)
+       res.status(httpStatus.OK).json(
+    response({
+        message : "delete successfully",
+        status : "Ok",
+        statusCode : httpStatus.OK,
+        data : deleteItem
+    })
+)
+    
+})
 module.exports ={
     createFolder,
     getFolderContents,
     getFolderStats,
-    renameItem
+    renameItem,
+    deleteItem
 }

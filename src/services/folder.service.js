@@ -77,9 +77,25 @@ const renameItem = async(userId , itemId , newName) =>{
     await item.save()
     return item;
 }
+
+const deleteItem = async (userId , itemId) =>{
+    if (!userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED , "you are not login ")
+    }
+    const item = await Item.findOne({_id : itemId , userId : userId , isDeleted : false})
+    if (!item) {
+        throw new ApiError(httpStatus.NOT_FOUND , "Item not found ")
+    }
+    item.isDeleted = true;
+    await item.save()
+    return {message : "Item delete successfully"}
+
+}
+
 module.exports = {
     createFolder,
     getFolderContents,
     getFolderStats,
-    renameItem
+    renameItem,
+    deleteItem
 }
