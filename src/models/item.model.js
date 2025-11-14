@@ -51,7 +51,7 @@ const itemSchema = mongoose.Schema(
             type : String
         },
         fileSize : {
-            type : String
+            type : Number
         },
         mimeType : {
             type : String

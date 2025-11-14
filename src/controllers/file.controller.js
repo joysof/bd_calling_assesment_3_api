@@ -23,6 +23,20 @@ const uploadFiles = catchAsync(async (req ,res) =>{
   )
 })
 
+const getStroge = catchAsync(async (req,res) =>{
+  const userId = req.user._id;
+  const storageInfo = await uploadFileService.getStroge(userId)
+    res.status(httpStatus.OK).json(
+    response({
+      message: 'stroge infromation',
+      status: 'Ok',
+      statusCode: httpStatus.OK,
+      data: storageInfo,
+    })
+  )
+})
+
 module.exports = {
-    uploadFiles
+    uploadFiles,
+    getStroge
 }

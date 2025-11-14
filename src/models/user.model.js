@@ -34,6 +34,10 @@ const userSchema = mongoose.Schema(
       required : true,
       default: 15 *1024*1024
     },
+    freeBytes :{
+      type : Number ,
+      default: 15 *1024*1024
+    },
     image: {
       type: String,
       required: [true, "Image is must be Required"],

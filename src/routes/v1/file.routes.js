@@ -9,6 +9,7 @@ const fileRouter = express.Router()
 
 
 fileRouter.post("/" , auth() , upload.any() ,fileController.uploadFiles)
+fileRouter.get("/" , auth() ,fileController.getStroge)
 
 
 

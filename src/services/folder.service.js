@@ -166,6 +166,15 @@ const getAllFavoriteItems = async (userId) =>{
     return items
 }
 
+
+const getHomeContents = async (userId) =>{
+  const items = await Item.find({
+    userId,
+    parentId : null,
+  }).sort({createAt : -1})
+  return items
+}
+
 module.exports = {
   createFolder,
   getFolderContents,
@@ -174,5 +183,6 @@ module.exports = {
   deleteItem,
   copyItem,
   setAsFavorite,
-  getAllFavoriteItems
+  getAllFavoriteItems,
+  getHomeContents
 }
