@@ -46,6 +46,15 @@ const itemSchema = mongoose.Schema(
         isDeleted : {
             type : Boolean,
             default : false
+        },
+        fileUrl : {
+            type : String
+        },
+        fileSize : {
+            type : String
+        },
+        mimeType : {
+            type : String
         }
     },{timestamps : true}
 )
