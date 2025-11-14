@@ -4,6 +4,7 @@ const authRoute = require("./auth.routes");
 const userRoute = require("./user.routes");
 const docsRoute = require("./docs.routes");
 const folderRoutes = require("./folder.routes");
+const fileRouter = require("./file.routes");
 
 
 const router = express.Router();
@@ -20,6 +21,10 @@ const defaultRoutes = [
   {
     path: "/folder",
     route: folderRoutes,
+  },
+  {
+    path: "/file",
+    route: fileRouter,
   },
  
 ];
